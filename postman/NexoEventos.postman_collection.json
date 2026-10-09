@@ -1,0 +1,2289 @@
+{
+  "info": {
+    "name": "NexoEventos API",
+    "description": "Casos permitidos y bloqueados para A1–A5 y reportes B1–B4. Ejecute las carpetas en orden sobre una base recién cargada.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "usuario",
+      "value": "farango"
+    },
+    {
+      "key": "evento_nuevo",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "0. Catálogo y consultas",
+      "item": [
+        {
+          "name": "Listar salones",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/salones/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "salones"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Listar servicios",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/servicios/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "servicios"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Listar clientes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/?q=S.A",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "S.A"
+                }
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Eventos de un cliente",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/1/eventos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes",
+                "1",
+                "eventos"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Listar staff",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/staff/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "staff"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Listar eventos (filtro estado)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/?estado=Confirmado",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos"
+              ],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "Confirmado"
+                }
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Detalle de evento",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/7",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "7"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Listar asistentes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/asistentes/?q=Acosta",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "asistentes"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "Acosta"
+                }
+              ]
+            },
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "1. Registros (201 / 409 / 422)",
+      "item": [
+        {
+          "name": "Crear cliente ✅ 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"Empresa\",\n  \"documento\": \"901999888-1\",\n  \"nombre\": \"Eventos del Norte S.A.S.\",\n  \"correo\": \"info@eventosnorte.co\",\n  \"telefono\": \"6015550000\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Cliente duplicado ⛔ 409",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"Empresa\",\n  \"documento\": \"900123456-1\",\n  \"nombre\": \"Duplicado\",\n  \"correo\": \"a@b.co\",\n  \"telefono\": \"6010000000\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Cliente tipo inválido ⛔ 422",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/clientes/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "clientes"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipo\": \"Gobierno\",\n  \"documento\": \"123456\",\n  \"nombre\": \"X Y Z\",\n  \"correo\": \"a@b.co\",\n  \"telefono\": \"6010000000\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 422', () => pm.response.to.have.status(422));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear staff con jefe ✅ 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/staff/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "staff"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Camilo Suárez\",\n  \"cargo\": \"Técnico de Iluminación\",\n  \"area\": \"Audiovisuales\",\n  \"correo\": \"csuarez@nexo.co\",\n  \"fecha_ingreso\": \"2026-10-01\",\n  \"jefe_id\": 6\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear asistente ✅ 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/asistentes/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "asistentes"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"documento\": \"1000200001\",\n  \"nombre\": \"Mateo Galindo\",\n  \"correo\": \"mateo@correo.co\",\n  \"empresa\": \"Independiente\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "A1. Disponibilidad y capacidad",
+      "item": [
+        {
+          "name": "Crear evento que se cruza ⛔ 409",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos"
+              ]
+            },
+            "description": "El Salón Guayacán tiene evento hasta las 12:00; a las 12:30 no queda la hora de montaje.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente_id\": 2,\n  \"salon_id\": 3,\n  \"nombre\": \"Taller de Economía Circular\",\n  \"tipo\": \"Seminario\",\n  \"inicio\": \"2026-11-18T12:30\",\n  \"fin\": \"2026-11-18T14:00\",\n  \"aforo_esperado\": 50\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear evento con hora de montaje ✅ 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente_id\": 2,\n  \"salon_id\": 3,\n  \"nombre\": \"Taller de Economía Circular\",\n  \"tipo\": \"Seminario\",\n  \"inicio\": \"2026-11-18T13:00\",\n  \"fin\": \"2026-11-18T15:00\",\n  \"aforo_esperado\": 50\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) { pm.collectionVariables.set('evento_nuevo', pm.response.json().id); }",
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Aforo mayor a la capacidad ⛔ 409",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente_id\": 2,\n  \"salon_id\": 1,\n  \"nombre\": \"Seminario grande\",\n  \"tipo\": \"Seminario\",\n  \"inicio\": \"2026-12-01T08:00\",\n  \"fin\": \"2026-12-01T10:00\",\n  \"aforo_esperado\": 50\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reprogramar con cruce ⛔ 409",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inicio\": \"2026-11-18T12:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Deshabilitar Salón Ceiba",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/salones/4",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "salones",
+                "4"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activo\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Evento en salón deshabilitado ⛔ 409",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente_id\": 2,\n  \"salon_id\": 4,\n  \"nombre\": \"Prueba salón inactivo\",\n  \"tipo\": \"Seminario\",\n  \"inicio\": \"2026-12-03T08:00\",\n  \"fin\": \"2026-12-03T10:00\",\n  \"aforo_esperado\": 50\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Habilitar Salón Ceiba",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/salones/4",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "salones",
+                "4"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activo\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Fin antes del inicio ⛔ 422",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente_id\": 2,\n  \"salon_id\": 1,\n  \"nombre\": \"Horario inválido\",\n  \"tipo\": \"Seminario\",\n  \"inicio\": \"2026-12-01T10:00\",\n  \"fin\": \"2026-12-01T08:00\",\n  \"aforo_esperado\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 422', () => pm.response.to.have.status(422));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "A3. Liquidación automática",
+      "item": [
+        {
+          "name": "Agregar café sin cantidad (usa aforo) ✅ 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}/servicios",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}",
+                "servicios"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"servicio_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Agregar multimedia sin cantidad (usa horas) ✅ 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}/servicios",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}",
+                "servicios"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"servicio_id\": 8\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Modificar cantidad del café ✅ 200",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}/servicios/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}",
+                "servicios",
+                "2"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cantidad\": 40\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Servicio repetido ⛔ 409",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}/servicios",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}",
+                "servicios"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"servicio_id\": 8\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reprogramar +1 hora (recalcula) ✅ 200",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fin\": \"2026-11-18T16:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Cotización",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}/cotizacion",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}",
+                "cotizacion"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Subir precio del café en el catálogo",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/servicios/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "servicios",
+                "2"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"precio_unitario\": 9000\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Servicios del evento (precio sigue congelado)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}/servicios",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}",
+                "servicios"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Restaurar precio del café",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/servicios/2",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "servicios",
+                "2"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"precio_unitario\": 6500\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Quitar multimedia ✅ 204",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}/servicios/8",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}",
+                "servicios",
+                "8"
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 204', () => pm.response.to.have.status(204));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Servicio en evento finalizado ⛔ 409",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/1/servicios",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "1",
+                "servicios"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"servicio_id\": 3\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "A2. Cupos y check-in",
+      "item": [
+        {
+          "name": "Inscribir con cupo lleno ⛔ 409",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/8/inscripciones",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "8",
+                "inscripciones"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"documento\": \"1000100001\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Inscribir en evento finalizado ⛔ 409",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/1/inscripciones",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "1",
+                "inscripciones"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"documento\": \"1000100001\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Inscribir ✅ 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/7/inscripciones",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "7",
+                "inscripciones"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"documento\": \"1000200001\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 201', () => pm.response.to.have.status(201));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Check-in fuera de horario ⛔ 409",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/7/checkin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "7",
+                "checkin"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"documento\": \"1000100001\",\n  \"fecha_hora\": \"2026-11-18T05:00\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Check-in dentro del horario ✅ 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/7/checkin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "7",
+                "checkin"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"documento\": \"1000100001\",\n  \"fecha_hora\": \"2026-11-18T07:30\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Doble check-in ⛔ 409",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/7/checkin",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "7",
+                "checkin"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"documento\": \"1000100001\",\n  \"fecha_hora\": \"2026-11-18T07:45\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Inscritos que llegaron",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/7/inscripciones?llegaron=true",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "7",
+                "inscripciones"
+              ],
+              "query": [
+                {
+                  "key": "llegaron",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "A4. Cierre y auditoría",
+      "item": [
+        {
+          "name": "Confirmar sin coordinador ⛔ 409",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}/estado",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}",
+                "estado"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"Confirmado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Asignar coordinador",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"coordinador_id\": 9\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Confirmar ✅ 200",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}/estado",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}",
+                "estado"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"Confirmado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Finalizar antes de la hora de fin ⛔ 409",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}/estado",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}",
+                "estado"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"Finalizado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Finalizar Feria (ya terminó) ✅ 200 tasa 75",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/6/estado",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "6",
+                "estado"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"Finalizado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 200', () => pm.response.to.have.status(200));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Reabrir un evento finalizado ⛔ 409",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/6/estado",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "6",
+                "estado"
+              ]
+            },
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"Cancelado\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Auditoría de la Feria",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/6/auditoria",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "6",
+                "auditoria"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Auditoría del evento nuevo",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/eventos/{{evento_nuevo}}/auditoria",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "eventos",
+                "{{evento_nuevo}}",
+                "auditoria"
+              ]
+            },
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "A5. Salones disponibles",
+      "item": [
+        {
+          "name": "Disponibles 18-nov 9-11, 50 personas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/salones/disponibles?inicio=2026-11-18T09:00&fin=2026-11-18T11:00&aforo=50",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "salones",
+                "disponibles"
+              ],
+              "query": [
+                {
+                  "key": "inicio",
+                  "value": "2026-11-18T09:00"
+                },
+                {
+                  "key": "fin",
+                  "value": "2026-11-18T11:00"
+                },
+                {
+                  "key": "aforo",
+                  "value": "50"
+                }
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "Disponibles con horario inválido ⛔ 409",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/salones/disponibles?inicio=2026-11-18T11:00&fin=2026-11-18T09:00&aforo=50",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "salones",
+                "disponibles"
+              ],
+              "query": [
+                {
+                  "key": "inicio",
+                  "value": "2026-11-18T11:00"
+                },
+                {
+                  "key": "fin",
+                  "value": "2026-11-18T09:00"
+                },
+                {
+                  "key": "aforo",
+                  "value": "50"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 409', () => pm.response.to.have.status(409));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "B. Reportes",
+      "item": [
+        {
+          "name": "Tablero de inicio",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reportes/tablero",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reportes",
+                "tablero"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "B1 Organigrama completo",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reportes/organigrama",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reportes",
+                "organigrama"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "B1 Organigrama desde Diana Torres",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reportes/organigrama?staff_id=5",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reportes",
+                "organigrama"
+              ],
+              "query": [
+                {
+                  "key": "staff_id",
+                  "value": "5"
+                }
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "B2 Escalamiento de Kevin Morales",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reportes/escalamiento/13",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reportes",
+                "escalamiento",
+                "13"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "B3 Ranking y Pareto",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reportes/ranking-clientes",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reportes",
+                "ranking-clientes"
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "B4 Ocupación del Salón Guayacán",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reportes/ocupacion-salones?salon_id=3",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reportes",
+                "ocupacion-salones"
+              ],
+              "query": [
+                {
+                  "key": "salon_id",
+                  "value": "3"
+                }
+              ]
+            },
+            "description": ""
+          }
+        },
+        {
+          "name": "404 empleado inexistente",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Usuario",
+                "value": "{{usuario}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reportes/escalamiento/999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reportes",
+                "escalamiento",
+                "999"
+              ]
+            },
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Responde 404', () => pm.response.to.have.status(404));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
